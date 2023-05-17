@@ -1,0 +1,55 @@
+﻿@page "/ShoppingCart"
+@inherits ShoppingCartBase
+
+@if (ShoppingCartItems == null && ErrorMessage == null)
+{
+	<DisplaySpinner></DisplaySpinner>
+}
+
+else if (ErrorMessage != null)
+{
+	<DisplayError ErrorMessage="@ErrorMessage"></DisplayError>
+}
+
+else
+{
+	<h3 class="mb-5">Shopping Cart</h3>
+	<div class="row mb-5">
+		<div class="col-md-9">
+			@foreach (var cartItem in ShoppingCartItems)
+			{
+				<div class="row mb-4">
+					<div class="col-md-4">
+						<img src="@cartItem.ProductImageUrl"  class="img-thumbnail"/>
+					</div>
+					<div class="col-md-8">
+						<h5>@cartItem.ProductName</h5>
+						<div class="mb-4">
+							@cartItem.ProductDescription
+						</div>
+
+						<span>Price: <b>@cartItem.Price.ToString("c")</b></span>
+						<div>
+							<button
+								@onclick = "() => DeleteItem_Click(cartItem.Id)"
+								href="#" 
+								class="btn btn-danger"><i class="bi bi-trash text-white"></i>
+							</button>
+						</div>
+					</div>
+					
+					
+				</div>				
+			}
+		</div>
+		<div class="col-md-3">
+			<h5>Cart Summary</h5>
+			<div class="mt-2">
+				<div> Total - @TotalPrice</div>
+				<a href="" class="btn btn-success">
+					<span class="oi oi-credit-card"></span>&nbsp; Proceed To Checkout
+				</a>
+			</div>
+		</div>
+	</div>
+}
